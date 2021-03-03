@@ -1,5 +1,6 @@
 package io.kanban.kanbanTaskBoard.Web;
 
+import io.kanban.kanbanTaskBoard.Services.MappValidationErrorService;
 import io.kanban.kanbanTaskBoard.Services.ProjectService;
 import io.kanban.kanbanTaskBoard.domain.Project;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,9 @@ public class ProjectController {
     @Autowired
     private ProjectService projectService;
 
+    @Autowired
+    private MappValidationErrorService mappValidationErrorService;
+
     @PostMapping("")
     public ResponseEntity<?> createNewProject(@Valid @RequestBody Project project, BindingResult result){
 
@@ -32,17 +36,20 @@ public class ProjectController {
 //            return new ResponseEntity<String>("invalid project object",HttpStatus.BAD_REQUEST);
 //        }
 
-        if (result.hasErrors()) {
+        // SpringBoot user input validation by using Binding result
+//        if (result.hasErrors()) {
+//
+//            Map<String,String> errorMap = new HashMap<>();
+//            for (FieldError error : result.getFieldErrors()){
+//                errorMap.put(error.getField() , error.getDefaultMessage());
+//            }
+//
+//            return new ResponseEntity<Map<String,String>>(errorMap,HttpStatus.BAD_REQUEST);
+//        }
 
-            Map<String,String> errorMap = new HashMap<>();
-            for (FieldError error : result.getFieldErrors()){
-                errorMap.put(error.getField() , error.getDefaultMessage());
-            }
 
-            return new ResponseEntity<Map<String,String>>(errorMap,HttpStatus.BAD_REQUEST);
-        }
-
-
+        ResponseEntity<?> errorMap = mappValidationErrorService.MapValidationService(result);
+        if (errorMap != null) return errorMap;
 
         Project project1 =  projectService.saveOrUpdate(project);
         return new ResponseEntity<Project>(project1, HttpStatus.CREATED);
