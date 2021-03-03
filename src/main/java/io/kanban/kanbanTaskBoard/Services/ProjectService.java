@@ -13,26 +13,17 @@ public class ProjectService {
     private ProjectRepository projectRepository;
 
 
-    public Boolean FindProjectIdentifier(Project project) {
-         projectRepository.FindProjectIdentifier(project.getProjectIdentifier().isBlank());
-         boolean x = project.getProjectIdentifier().isBlank();
-         return x;
-    }
 
-    public Project saveOrUpdate(Project project) {
+    public Project saveOrUpdate(Project project){
 
         //Logic
         try {
             project.setProjectIdentifier(project.getProjectIdentifier().toUpperCase());
-            if (!FindProjectIdentifier(project)) {
-                return projectRepository.save(project);
-            }
-        return null;
-        } catch (Exception e) {
-            throw new ProjectIdException("Project '" + project.getProjectIdentifier().toUpperCase() + "' already exits");
+            return projectRepository.save(project);
+        }catch (Exception e){
+            throw  new ProjectIdException("Project '"+project.getProjectIdentifier().toUpperCase()+"' already exits");
         }
 
 
     }
-
 }
