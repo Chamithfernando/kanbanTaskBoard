@@ -1,6 +1,8 @@
 package io.kanban.kanbanTaskBoard.Exceptions;
 
 public class ProjectIdExceptionResonse {
+
+
     private String projectIdentifier;
 
     public ProjectIdExceptionResonse(String projectIdentifier) {
