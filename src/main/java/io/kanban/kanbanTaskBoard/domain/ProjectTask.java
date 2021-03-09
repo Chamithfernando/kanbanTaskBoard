@@ -1,6 +1,8 @@
 package io.kanban.kanbanTaskBoard.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.Date;
@@ -22,6 +24,10 @@ public class ProjectTask {
     private Date dueDate;
 
     //each project belong to one backlog and backlog can only belowng to one project
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "backlog_id" , updatable = false, nullable = false)
+    @JsonIgnore  // this is related to sloving problem infinitiy recursion in stackOverflow
+    private Backlog backlog;
 
    //OneToOne with Backlog
     @Column(updatable = false)
@@ -113,6 +119,15 @@ public class ProjectTask {
         this.updated_At = updated_At;
     }
 
+
+    public Backlog getBacklog() {
+        return backlog;
+    }
+
+    public void setBacklog(Backlog backlog) {
+        this.backlog = backlog;
+    }
+
     @PrePersist
     protected void onCreate(){
         this.created_At = new Date();
@@ -138,4 +153,6 @@ public class ProjectTask {
                 ", updated_At=" + updated_At +
                 '}';
     }
+
+
 }
