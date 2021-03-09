@@ -31,7 +31,7 @@ public class BacklogController {
         if (errorMap != null){
             return errorMap;
         }
-        ProjectTask projectTask1 = projectTaskService.addProjectTask(Backlog_id,projectTask);
+        ProjectTask projectTask1 = projectTaskService.addProjectTask(Backlog_id.toUpperCase(),projectTask);
 
         return  new ResponseEntity<ProjectTask>(projectTask1, HttpStatus.CREATED);
     }
