@@ -1,7 +1,9 @@
 package io.kanban.kanbanTaskBoard.Services;
 
 import io.kanban.kanbanTaskBoard.Exceptions.ProjectIdException;
+import io.kanban.kanbanTaskBoard.domain.Backlog;
 import io.kanban.kanbanTaskBoard.domain.Project;
+import io.kanban.kanbanTaskBoard.repositories.BacklogRepository;
 import io.kanban.kanbanTaskBoard.repositories.ProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,12 +16,29 @@ public class ProjectService {
     @Autowired
     private ProjectRepository projectRepository;
 
+    @Autowired
+    private BacklogRepository backlogRepository;
+
     public Project saveOrUpdate(Project project){
 
         //Logic
         try {
             project.setProjectIdentifier(project.getProjectIdentifier().toUpperCase());
+
+            if (project.getId() == null){
+                //Instanciate new backlog every time you uodate project.
+                Backlog backlog = new Backlog();
+                project.setBacklog(backlog);
+                backlog.setProject(project);
+                backlog.setProjectIdentifier(project.getProjectIdentifier().toUpperCase());
+            }
+
+            if (project.getId() != null){
+                project.setBacklog(backlogRepository.findByProjectIdentifier(project.getProjectIdentifier().toUpperCase()));
+            }
             return projectRepository.save(project);
+
+
         }catch (Exception e){
             throw  new ProjectIdException("Project '"+project.getProjectIdentifier().toUpperCase()+"' already exits");
         }

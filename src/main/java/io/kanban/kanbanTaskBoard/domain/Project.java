@@ -31,6 +31,7 @@ public class Project {
     private Date updated_At;
 
     //One to one relationShip, one backlog and one project
+    // cascade all (all) inside the realtionship
     @OneToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL, mappedBy = "project")
 
     private Backlog backlog;

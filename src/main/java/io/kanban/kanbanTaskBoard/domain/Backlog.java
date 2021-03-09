@@ -1,6 +1,8 @@
 package io.kanban.kanbanTaskBoard.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -13,9 +15,10 @@ public class Backlog {
     private String projectIdentifier;
 
     //OnetoOne with a project
+    //Eager and lazy lazy is doesnt load the reationship but Eager load all the relationsships
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "project_id",nullable = false)
-    //
+    @JsonIgnore       // this is related to sloving problem infiniti recursion in stackOverflow
     private Project project;
 
     //Onetomany projectTask
