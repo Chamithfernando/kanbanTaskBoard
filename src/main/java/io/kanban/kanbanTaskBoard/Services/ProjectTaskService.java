@@ -7,6 +7,8 @@ import io.kanban.kanbanTaskBoard.repositories.ProjectTaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class ProjectTaskService {
 
@@ -15,6 +17,9 @@ public class ProjectTaskService {
 
     @Autowired
     private ProjectTaskRepository projectTaskRepository;
+
+    @Autowired
+    private ProjectService projectService;
 
     public ProjectTask addProjectTask(String projectIdentifier, ProjectTask projectTask){
 
@@ -57,5 +62,15 @@ public class ProjectTaskService {
 
         return  projectTaskRepository.save(projectTask);
 
+    }
+
+
+//    public Optional<ProjectTask> findbyid(Long id){
+//        return projectTaskRepository.findById(id);
+//    }
+
+
+    public Iterable<ProjectTask> findBacklogbyID(String backlog_id) {
+        return (Iterable<ProjectTask>) projectTaskRepository.findByProjectIdentifier(backlog_id);
     }
 }

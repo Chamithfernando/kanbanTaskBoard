@@ -30,7 +30,7 @@ public class ProjectTask {
     private Backlog backlog;
 
    //OneToOne with Backlog
-    @Column(updatable = false)
+    @Column(updatable = true)
     private String projectIdentifier;
     private Date created_At;
     private Date updated_At;

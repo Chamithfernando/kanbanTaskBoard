@@ -2,9 +2,7 @@ package io.kanban.kanbanTaskBoard.Web;
 
 import io.kanban.kanbanTaskBoard.Services.MappValidationErrorService;
 import io.kanban.kanbanTaskBoard.Services.ProjectTaskService;
-import io.kanban.kanbanTaskBoard.domain.Backlog;
 import io.kanban.kanbanTaskBoard.domain.ProjectTask;
-import io.kanban.kanbanTaskBoard.repositories.ProjectTaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/backlog")
@@ -37,4 +36,17 @@ public class BacklogController {
         return  new ResponseEntity<ProjectTask>(projectTask1, HttpStatus.CREATED);
     }
 
+
+//    @GetMapping("/get/{Backlog_id}")
+//    ResponseEntity<ProjectTask> getBacklogById(@PathVariable Long Backlog_id){
+//        Optional<ProjectTask> doctorResult = projectTaskService.findbyid(Backlog_id);
+//        return doctorResult.map(response ->ResponseEntity.ok().body(response))
+//                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+//    }
+
+
+    @GetMapping("/get/{Backlog_id}")
+    public Iterable<ProjectTask> getProjectbacklog(@PathVariable String Backlog_id){
+        return projectTaskService.findBacklogbyID(Backlog_id);
+    }
 }

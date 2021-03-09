@@ -1,6 +1,7 @@
 package io.kanban.kanbanTaskBoard.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -33,7 +34,7 @@ public class Project {
     //One to one relationShip, one backlog and one project
     // cascade all (all) inside the realtionship
     @OneToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL, mappedBy = "project")
-
+     //reduce the size of the json payload it reduse ( increment json payload by each request) @JsonIgnore
     private Backlog backlog;
 
     public Project() {
