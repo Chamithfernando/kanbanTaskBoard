@@ -13,6 +13,7 @@ public class Backlog {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    // each object shoud start from 0
     private Integer PTSequence = 0;
     private String projectIdentifier;
 
