@@ -34,20 +34,26 @@ public class ProjectTaskService {
        //Update the backlog sequence
         BacklogSequence++;
 
+        //Increment BackLogSequence into database
+        //Keeping going the sequence
+        backlog.setPTSequence(BacklogSequence);
+
         // Add sequence to Project task
         projectTask.setProjectSequence(projectIdentifier+"-"+BacklogSequence);
         projectTask.setProjectIdentifier(projectIdentifier);
-
-        //Initial priority when priorty null
-//        if (projectTask.getPriorty() == 0 || projectTask.getPriorty()== null){
-//            projectTask.setPriorty(3); // 3 is considerd as low priorty
-//        }
 
         //Initilal status when start is null
 
         if (projectTask.getStatus() == "" || projectTask.getStatus() == null){
             projectTask.setStatus("TO_DO");
         }
+
+        //Initial priority when priorty null
+        if (projectTask.getPriorty()== null){ // In the future we need to ProjectTask.getPriorty() ==0 to handle the form
+            projectTask.setPriorty(3); // 3 is considerd as low priorty
+        }
+
+
 
         return  projectTaskRepository.save(projectTask);
 
