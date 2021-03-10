@@ -102,4 +102,10 @@ public class ProjectTaskService {
 
         return (Iterable<ProjectTask>) projectTaskRepository.findByProjectIdentifier(backlog_id);
     }
+
+    //Listing project Task by using project sequence number
+    public ProjectTask findPTByProjectSequence(String Backlog_id,String pt_id){
+        //make sure we are searching valid sequence
+        return projectTaskRepository.findByProjectSequence(pt_id);
+    }
 }
