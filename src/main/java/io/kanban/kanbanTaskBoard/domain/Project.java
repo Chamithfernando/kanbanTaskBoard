@@ -34,7 +34,7 @@ public class Project {
     //One to one relationShip, one backlog and one project
     // cascade all (all) inside the realtionship
     @OneToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL, mappedBy = "project")
-     //reduce the size of the json payload it reduse ( increment json payload by each request) @JsonIgnore
+    @JsonIgnore //reduce the size of the json payload it reduse ( increment json payload by each request) @JsonIgnore
     private Backlog backlog;
 
     public Project() {
